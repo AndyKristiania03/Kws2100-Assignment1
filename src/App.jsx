@@ -1,10 +1,11 @@
 // src/App.tsx
 import React from 'react';
+import MapContainer from './MapView';
 
 const App = () => {
   return (
     <div style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>
-      <h1>KWS2100 - Assignement 1</h1>
+      <MapContainer/>
     </div>
   );
 };
