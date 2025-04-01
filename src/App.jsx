@@ -4,7 +4,7 @@ import MapContainer from './MapView';
 
 const App = () => {
   return (
-    <div style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>
+    <div style={{height: '100vh', width: '100vw'}}>
       <MapContainer/>
     </div>
   );
