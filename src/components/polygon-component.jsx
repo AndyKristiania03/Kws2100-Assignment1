@@ -2,26 +2,36 @@ import { Vector as VectorLayer } from 'ol/layer';
 import { Vector as VectorSource } from 'ol/source';
 import { Style, Fill, Stroke, Circle } from 'ol/style';
 import GeoJSON from 'ol/format/GeoJSON'; // Import the GeoJSON format from OpenLayers
+import GeoData from '../data/civil-defence-regions.json';
 
 
 // Create a vector source for polygon
 const polygonSource = new VectorSource();
 
-// Fetch the GeoJSON file for polygon and load them
-fetch('/src/data/civil-defence-regions.geojson') // Load the GeoJSON file from the public folder
-.then((response) => response.json())
-.then((geojsonData) => {
-  // Parse the GeoJSON data for points using OpenLayers' GeoJSON format parser
-  const geoJSONFormat = new GeoJSON();
-  const features = geoJSONFormat.readFeatures(geojsonData, {
-    dataProjection: 'EPSG:4326', // Projection of input data (GeoJSON uses EPSG:4326 by default)
-    featureProjection: 'EPSG:3857', // Convert to the map's projection (EPSG:3857)
-  });
+const geoJSONFormat = new GeoJSON();
+const features = geoJSONFormat.readFeatures(GeoData, {
+  dataProjection: 'EPSG:4326', // Projection of input data (GeoJSON uses EPSG:4326 by default)
+  featureProjection: 'EPSG:3857', // Convert to the map's projection (EPSG:3857)
+});
 
-  // Add the features (points) to the vector source
-  polygonSource.addFeatures(features);
-})
-.catch((error) => console.error('Error loading GeoJSON data:', error));
+// Add the features (points) to the vector source
+polygonSource.addFeatures(features);
+
+// Fetch the GeoJSON file for polygon and load them
+// fetch('/src/data/civil-defence-regions.geojson') // Load the GeoJSON file from the public folder
+// .then((response) => response.json())
+// .then((geojsonData) => {
+//   // Parse the GeoJSON data for points using OpenLayers' GeoJSON format parser
+//   const geoJSONFormat = new GeoJSON();
+//   const features = geoJSONFormat.readFeatures(geojsonData, {
+//     dataProjection: 'EPSG:4326', // Projection of input data (GeoJSON uses EPSG:4326 by default)
+//     featureProjection: 'EPSG:3857', // Convert to the map's projection (EPSG:3857)
+//   });
+
+//   // Add the features (points) to the vector source
+//   polygonSource.addFeatures(features);
+// })
+// .catch((error) => console.error('Error loading GeoJSON data:', error));
 
 // Function to determine polygon style based on the category
 export const getPolygonStyle = (category) => {
