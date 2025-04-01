@@ -2,23 +2,32 @@ import { Vector as VectorLayer } from 'ol/layer';
 import { Vector as VectorSource } from 'ol/source';
 import { Style, Fill, Stroke, Circle } from 'ol/style';
 import GeoJSON from 'ol/format/GeoJSON'; // Import the GeoJSON format from OpenLayers
+import GeoData from '../data/public-shelters.json';
 
 // Create a vector source for points
 const pointSource = new VectorSource();
 
-// Fetch the GeoJSON file and load the pointsS
-fetch('/src/data/public-shelters.geojson') // Adjust the path according to your file location
-  .then((response) => response.json())
-  .then((geojsonData) => {
-    // Parse the GeoJSON data and add it to the pointsSource
-    const geoJSONFormat = new GeoJSON();
-    const features = geoJSONFormat.readFeatures(geojsonData, {
+const geoJSONFormat = new GeoJSON();
+    const features = geoJSONFormat.readFeatures(GeoData, {
       dataProjection: 'EPSG:4326', // Specify the projection of your data (GeoJSON is often in EPSG:4326)
       featureProjection: 'EPSG:3857', // The projection for your map (usually EPSG:3857 for OpenStreetMap)
     });
     pointSource.addFeatures(features); // Add parsed features to the source
-  })
-  .catch((error) => console.error('Error loading GeoJSON data:', error));
+
+
+// Fetch the GeoJSON file and load the pointsS
+// fetch('/src/data/public-shelters.geojson') // Adjust the path according to your file location
+//   .then((response) => response.json())
+//   .then((geojsonData) => {
+//     // Parse the GeoJSON data and add it to the pointsSource
+//     const geoJSONFormat = new GeoJSON();
+//     const features = geoJSONFormat.readFeatures(geojsonData, {
+//       dataProjection: 'EPSG:4326', // Specify the projection of your data (GeoJSON is often in EPSG:4326)
+//       featureProjection: 'EPSG:3857', // The projection for your map (usually EPSG:3857 for OpenStreetMap)
+//     });
+//     pointSource.addFeatures(features); // Add parsed features to the source
+//   })
+//   .catch((error) => console.error('Error loading GeoJSON data:', error));
 
 // Function to determine point style based on the category
 export const getPointStyle = (category) => {
