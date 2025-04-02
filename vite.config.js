@@ -4,5 +4,5 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: "/Kws2100-Assignment1"
+  base: '/Kws2100-Assignment1',
 })
